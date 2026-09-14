@@ -24,8 +24,9 @@ model Term {
 // clerk. It solely manages the user relationship with other data models
 // this needs to be closely managed to synchronize with external data
 model User {
-  id        String @id
-  userTerms UserTerm[]
+id           String        @id
+  userTerms    UserTerm[]
+  progressLogs ProgressLog[]
 }
 
 // manage many-to-many relationship between objects
@@ -38,4 +39,20 @@ model UserTerm {
   termId  Int
   // uses composite ID from principle tables
   @@id([userId, termId])
+}
+
+// apurba - one row = one set the user logged on one exercise
+// exerciseId is just text for now. jashan will make a real Exercise table later
+model ProgressLog {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  exerciseId String
+  date       DateTime
+  weight     Float
+  reps       Int
+  sets       Int
+  notes      String?
+
+  @@index([userId, exerciseId])
 }
