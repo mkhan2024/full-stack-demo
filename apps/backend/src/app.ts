@@ -8,6 +8,7 @@ import corsOptions from "../config/cors";
 import setupSwagger from "../config/swagger";
 import termRoutes from "./api/v1/routes/termRoutes";
 import userTermRoutes from "./api/v1/routes/userTermRoutes";
+import progressRoutes from "./api/v1/routes/progressRoutes";
 import errorHandler from "./api/v1/middleware/errorHandler";
 
 const app: Express = express();
@@ -35,6 +36,7 @@ app.get("/",  (_req, res) => {
 
 app.use("/api/v1", termRoutes);
 app.use("/api/v1", userTermRoutes);
+app.use("/api/v1", progressRoutes);
 app.use(errorHandler); //errorhandler catches errors as last element in middleware chain
 // occurs when "next" is invoked
 
